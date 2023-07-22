@@ -102,10 +102,11 @@ class ParserHelper:
             # get last participant of indices, which is in square brackets
             unpacked_arr_index = indices[-1][0]
             strval=strval[:-len(unpacked_arr_index)]
-            x = re.split(' ', strval)
+            x = re.split(r' ', strval)
+            x=x[:-1]
             x.append(unpacked_arr_index)
         else:
-            x = re.split(' ', strval)
+            x = re.split(r' ', strval)
 
         p_name = ''
         for i in range(len(x)):

@@ -81,6 +81,16 @@ class TestPastAsModule(unittest.TestCase):
 
         self.assertEqual('\n' + module, TEST_MODULE_4_REF)
 
+    def test_past_as_module_6(self):
+        """Test past as module with TEST_MODULE_6"""
+        moddict = ModDict()
+        moddict.parse(inputs.TEST_MODULE_6)
+
+        printer = Printer(moddict)
+        module = printer['Module']
+
+        self.assertEqual('\n' + module, TEST_MODULE_6_REF)
+
 
 TEST_MODULE_0_REF = ("""
 module alu_dsp
@@ -187,6 +197,20 @@ module testmod3
 );
 """)
 
+TEST_MODULE_6_REF = ("""
+module testmod6
+#(
+   parameter SRC_PARAM = 1
+)
+(
+   input logic  srst,
+   input logic  clk,
+   input logic  another_srst,
+   input logic  another_clock,
+   output logic  oitf[SRC_PARAM - 1 :0],
+   output logic  outsig3[SRC_PARAM-1:0]
+);
+""")
 
 if __name__ == '__main__':
     unittest.main()

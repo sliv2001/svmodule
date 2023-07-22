@@ -139,3 +139,16 @@ TEST_MODULE_5 = """module alu_dsp  (input         clk, enable, is_signed,
     output        out_en,
     output [31:0] out);
 """
+
+TEST_MODULE_6 = """module testmod6
+#(
+   parameter   SRC_PARAM  = 1
+)
+( input logic          srst,
+   input logic          clk,
+
+   input logic          another_srst,
+   input logic          another_clock,
+   output logic         oitf [   SRC_PARAM - 1   :0],
+   output logic         outsig3 [SRC_PARAM-1:0]
+);"""
