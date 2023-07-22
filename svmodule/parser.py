@@ -95,7 +95,17 @@ class ParserHelper:
              - "interface.slave name" =>
                    ('interface.slave', 'name')
          """
-        x = re.split(' ', strval)
+        
+        # in case if unpacked index exists, it must be processed independently
+        indices = re.findall(r'(\[(.*?)\])', strval)
+        if (len(indices)>0 and strval[-1]==']'):
+            # get last participant of indices, which is in square brackets
+            unpacked_arr_index = indices[-1][0]
+            strval=strval[:-len(unpacked_arr_index)]
+            x = re.split(' ', strval)
+            x.append(unpacked_arr_index)
+        else:
+            x = re.split(' ', strval)
 
         p_name = ''
         for i in range(len(x)):
