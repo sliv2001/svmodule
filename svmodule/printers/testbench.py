@@ -19,21 +19,30 @@
 #
 # Copyright (C) 2013-2019 Christophe Clienti
 
-# Load printers
-# flake8: noqa
-
+from svmodule.printers.instance import Instance
+from svmodule.printers.logic import Logic
 from .printerbase import PrinterBase
-from .doctable import DocTable
-from .importlist import ImportList
-from .initlatch import InitLatch
-from .initwire import InitWire
-from .instance import Instance
-from .module import Module
-from .modulename import ModuleName
-from .parameters import Parameters
-from .signals import Signals
-from .logic import Logic
-from .clockingblock import ClockingBlock
-from .wavedisp import Wavedisp
-from .pandaxml import PandaXml
-from .testbench import Testbench
+from .align import vertical_align_string
+
+class Testbench(PrinterBase):
+    """Returns simple testbench with no initial block
+    """
+
+    def get_logic(self):
+        return Logic(self.pmod, self.isize, **self.properties).getstr()
+    
+    def get_instance(self):
+        return Instance(self.pmod, self.isize, **self.properties).getstr()
+
+    def getstr(self):
+        idt = ' '*self.isize
+        modname = self.pmod['name']
+        strval = 'module tb_' + modname + ';\n'
+
+        # Insert logic
+        strval += '\n' + self.get_logic()
+
+        # Insert module instance
+        strval += '\n' + self.get_instance()
+        strval += '\n' + 'endmodule'
+        return strval
